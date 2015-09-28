@@ -8,6 +8,8 @@ module.exports = function (grunt) {
         n2a = require('native2ascii').native2ascii;
 
     grunt.registerMultiTask("nerve-handlebars", "translate handlebars templates to js", function () {
+        var options = this.options();
+
         function buildPartials(source, fileName) {
             var dir = path.dirname(fileName),
                 includes = source.match(/\{\{>(.*)\}\}/g);
@@ -26,15 +28,35 @@ module.exports = function (grunt) {
         this.filesSrc.forEach(function (file) {
             var cwd = this.data.cwd || '',
                 dst = this.data.dst || '',
-                filePath = path.resolve(cwd || '', file),
+                filePath = path.resolve(cwd, file),
                 moduleName = file.split('/')[0],
                 relativeFileName = file.replace(moduleName + '/tmpl/', ''),
                 dstPath = path.resolve(path.resolve(dst, moduleName, 'tmpl', relativeFileName.replace(/(\.html)|(\.hbs)/, '.js'))),
                 tmplSource = grunt.file.read(filePath, {encoding: 'utf-8'}),
                 handleBarsJs;
 
+            if (this.data.isSimplePath) {
+                dstPath = path.resolve(dst, file.replace(/\.hbs$/, '.js'));
+            }
+
             tmplSource = buildPartials(tmplSource, filePath);
-            handleBarsJs = "define(['handlebars', 'handlebars-helpers'], function (Handlebars, helpers) { helpers(Handlebars); return Handlebars.template(" + Handlebars.precompile(tmplSource) + "); });";
+
+            if (options.isCommonJs) {
+                handleBarsJs = " " +
+                    "Handlebars = require('handlebars');" +
+                    "helpers = require(" + options.helpersPath + ");" +
+                    "helpers(Handlebars);" +
+                    "module.exports = Handlebars.template(" + Handlebars.precompile(tmplSource) + ");";
+            } else {
+                handleBarsJs = " " +
+                    "define([" +
+                    "   'handlebars'," +
+                    "   '" + options.helpersPath + "'" +
+                    "], function (Handlebars, helpers) {" +
+                    "       helpers(Handlebars);" +
+                    "       return Handlebars.template(" + Handlebars.precompile(tmplSource) + ");" +
+                    "});";
+            }
 
             grunt.file.mkdir(path.dirname(dstPath));
             grunt.file.write(dstPath, n2a(handleBarsJs));
