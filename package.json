@@ -1,0 +1,29 @@
+{
+  "name": "grunt-nerve-handlebars",
+  "version": "0.0.1",
+  "description": "grunt task for compile handlebars templates in nerve framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nervejs/grunt-nerve-handlebars.git"
+  },
+  "keywords": [
+    "grunt",
+    "handlebars",
+    "templates",
+    "nerve"
+  ],
+  "author": "denis.yarkeev@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nervejs/grunt-nerve-handlebars/issues"
+  },
+  "homepage": "https://github.com/nervejs/grunt-nerve-handlebars#readme",
+  "dependencies": {
+    "handlebars": "^4.0.3",
+    "native2ascii": "0.0.5"
+  }
+}
