@@ -44,7 +44,7 @@ module.exports = function (grunt) {
             if (options.isCommonJs) {
                 handleBarsJs = " " +
                     "Handlebars = require('handlebars');" +
-                    "helpers = require(" + options.helpersPath + ");" +
+                    "helpers = require('node-nerve').HandlebarsHelpers;" +
                     "helpers(Handlebars);" +
                     "module.exports = Handlebars.template(" + Handlebars.precompile(tmplSource) + ");";
             } else {
