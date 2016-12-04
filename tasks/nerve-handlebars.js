@@ -51,7 +51,7 @@ module.exports = function (grunt) {
             var filePath = path.resolve(this.data.cwd, file),
                 moduleName = file.split('/')[0],
                 relativeFileName = file.replace(moduleName + '/tmpl/', ''),
-                dstPath = path.resolve(options.dst, moduleName, options.tmplDir || '', relativeFileName.replace(/(\.html)|(\.hbs)/, '.js')),
+                dstPath = path.resolve(options.dst, options.tmplDir || '', relativeFileName.replace(/(\.html)|(\.hbs)/, '.js')),
                 tmplSource = grunt.file.read(filePath, {encoding: 'utf-8'}),
                 handleBarsJs,
                 precompile;
