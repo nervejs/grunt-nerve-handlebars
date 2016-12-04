@@ -7,7 +7,7 @@ module.exports = function (grunt) {
         Handlebars = require('handlebars'),
         n2a = require('native2ascii').native2ascii;
 
-    grunt.registerMultiTask('templates', 'translate templates to handlebars', function () {
+    grunt.registerMultiTask('nerve-handlebars', 'translate templates to handlebars', function () {
         var options = this.options();
 
         function buildPartials(source, fileName) {

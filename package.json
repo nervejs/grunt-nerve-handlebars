@@ -1,6 +1,6 @@
 {
   "name": "grunt-nerve-handlebars",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "grunt task for compile handlebars templates in nerve framework",
   "main": "index.js",
   "scripts": {
